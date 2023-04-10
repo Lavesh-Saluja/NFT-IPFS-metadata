@@ -5,22 +5,20 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+require("dotenv").config({ path: ".env" });
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+  const metadataURL = "https://ipfs.io/ipfs/QmRFdctFnQt1CvDXD3vcioKQmLeDNDjmYgQnnT7MZzConW/";
 
-  const lockedAmount = hre.ethers.utils.parseEther("0.001");
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
 
-  await lock.deployed();
+  const NFTColection = await hre.ethers.getContractFactory("NFTCollection");
+  const nft = await NFTColection.deploy(metadataURL);
+
+  await nft.deployed();//0x29438eE1D941413Fcdf57241703c16Fc6c609199
 
   console.log(
-    `Lock with ${ethers.utils.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+    `${nft.address}`
   );
 }
 
