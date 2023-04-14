@@ -2,6 +2,7 @@
 pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract NFTCollection is Ownable,ERC721Enumerable{
     string baseTokenURI;
@@ -29,6 +30,14 @@ contract NFTCollection is Ownable,ERC721Enumerable{
     }
     function _baseURI() internal view virtual override returns (string memory) {
         return baseTokenURI;
+    }
+
+
+     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+
+        string memory baseURI = _baseURI();
+        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, Strings.toString(tokenId), ".json")) : "";
     }
      function setPaused() public onlyOwner {
         paused = !paused;

@@ -8,14 +8,14 @@ const hre = require("hardhat");
 require("dotenv").config({ path: ".env" });
 
 async function main() {
-  const metadataURL = "https://ipfs.io/ipfs/QmRFdctFnQt1CvDXD3vcioKQmLeDNDjmYgQnnT7MZzConW/";
+  const metadataURL = "ipfs://QmRFdctFnQt1CvDXD3vcioKQmLeDNDjmYgQnnT7MZzConW/";
 
 
 
   const NFTColection = await hre.ethers.getContractFactory("NFTCollection");
   const nft = await NFTColection.deploy(metadataURL);
 
-  await nft.deployed();//0x29438eE1D941413Fcdf57241703c16Fc6c609199
+  await nft.deployed();//0xE8De5B77CaEaB882b8252edb83D5390B5f022777
 
   console.log(
     `${nft.address}`
